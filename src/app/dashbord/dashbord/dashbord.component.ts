@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { current } from '../current/current';
 
 @Component({
@@ -10,6 +10,7 @@ export class DashbordComponent implements OnInit {
 
   public data2:string='';
   public data1:string='';
+  private tabs:Array<Window>=[];
 
   constructor() { }
 
@@ -27,9 +28,19 @@ export class DashbordComponent implements OnInit {
     var protocol = window.location.protocol;
     var host = window.location.host;
     var url = protocol+"//"+host+"/";
+    var tabs = [];
     win.forEach(function(name){
-      window.open(url+name,name,'',false);
-    }); 
+      tabs.push(window.open(url+name,name,'',false)); 
+    });
+    this.tabs=tabs;
+    console.log(this.tabs);
+  }
+
+  @HostListener('window:beforeunload',['$event'])
+  CloseWindow(event){
+    this.tabs.forEach(function(win){
+      win.close();
+    });
   }
 
   //Open window one by one
