@@ -15,6 +15,7 @@ export class DashbordComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    document.cookie='';
   }
 
   //Open all window of one event
@@ -22,6 +23,8 @@ export class DashbordComponent implements OnInit {
   openInNewTabs(){
     current.home=this.data2;
     current.about=this.data1;
+    document.cookie="user="+current.home;
+    document.cookie="pass="+current.about;
     window.localStorage.setItem('home',current.home);
     window.localStorage.setItem('about',current.about);
     var win = ['pageOne','pageTwo'];
@@ -32,8 +35,10 @@ export class DashbordComponent implements OnInit {
     win.forEach(function(name){
       tabs.push(window.open(url+name,name,'',false)); 
     });
+    tabs.push(window.open("http://localhost:3000",'RocketChat','',false));
     this.tabs=tabs;
     console.log(this.tabs);
+    tabs[0].focus();
   }
 
   @HostListener('window:beforeunload',['$event'])
