@@ -1,3 +1,4 @@
+// routes here.
 import { Routes } from '@angular/router';
 import { DashbordComponent } from './dashbord/dashbord/dashbord.component';
 import { PageOneComponent } from './pages/page/page-one/page-one.component';
